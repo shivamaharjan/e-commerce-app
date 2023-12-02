@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
 
-function login() {
+function Login() {
   return (
-    <div>login</div>
-  )
+    <div>
+      <Header />
+      <div className="main"></div>
+      <Footer />
+    </div>
+  );
 }
 
-export default login
+export default Login;

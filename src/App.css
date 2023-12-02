@@ -1,0 +1,22 @@
+/* C7DCA7  89B9AD FFEBD8 FFC5C5 */
+
+.nav-bar{
+    background: linear-gradient( #C7DCA7, #89B9AD);
+}
+.main{
+    min-height: 80vh;
+}
+
+.card-text{
+    background-color: #c7dca732;
+}
+.primary-color{
+    color: #89B9AD;
+}
+.line{
+    width:100px;
+    /* margin-left: auto;
+    margin-right: auto; */
+    margin: auto;
+  
+}
