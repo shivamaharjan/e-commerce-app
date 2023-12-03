@@ -1,4 +1,4 @@
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
 import { toast } from "react-toastify"
 import { auth, db } from "../../config/firbase-config";
 import { doc, setDoc } from "firebase/firestore";
@@ -29,3 +29,19 @@ export const createAdminUser = (userInfo, navigate) => async (dispatch) => {
     }
   }
 };
+
+export const loginAdminUser = (userInfo) => async(dispatch) => {
+    try {
+        const authSnap = signInWithEmailAndPassword(auth, userInfo.email, userInfo.password);
+        toast.promise(authSnap, {
+            pending: "In progress..."
+        })
+        const {user} = await authSnap;
+        toast.success("User Signed in!")
+
+
+
+    } catch (e) {
+        toast.error(`Something went wrong. ${e.message}`);
+      }
+    }

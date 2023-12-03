@@ -78,7 +78,7 @@ function Register() {
     <div>
       <Header />
       <div className="main">
-        <Form onSubmit={handleOnSubmit}className="login-form mt-3 mb-3 border p-5 shadow-lg" >
+        <Form onSubmit={handleOnSubmit}className="form-color login-form mt-3 mb-3 border p-5 shadow-lg" >
           {inputs.map((input) => {
             return <CustomInput {...input} key={input.label}  onChange={handleOnChange}
             />;

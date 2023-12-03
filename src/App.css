@@ -1,7 +1,7 @@
 /* C7DCA7  89B9AD FFEBD8 FFC5C5 */
 
 .nav-bar{
-    background: linear-gradient( #C7DCA7, #89B9AD);
+    background: linear-gradient( #c7dca7, #89b9ad);
 }
 .main{
     min-height: 80vh;
@@ -19,4 +19,7 @@
     margin-right: auto; */
     margin: auto;
   
+}
+.form-color{
+    background: linear-gradient( #ffebd831, #ffc5c50d);
 }
