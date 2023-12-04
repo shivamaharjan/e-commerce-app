@@ -1,7 +1,8 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
 import { toast } from "react-toastify"
 import { auth, db } from "../../config/firbase-config";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { setUser } from "./userSlice";
 
 export const createAdminUser = (userInfo, navigate) => async (dispatch) => {
   try {
@@ -44,4 +45,19 @@ export const loginAdminUser = (userInfo) => async(dispatch) => {
     } catch (e) {
         toast.error(`Something went wrong. ${e.message}`);
       }
+    }
+
+    export const getUserInfo = (uid) => dispatch => {
+      try {
+        const userSnap = getDoc(doc(db, "users", uid))
+        if (userSnap.exists()){
+          const userData = userSnap.data();
+          const userInfo = {...userData, uid}
+          dispatch(setUser(userInfo))
+
+        }
+      } catch (e) {
+        toast.error(`Something went wrong. ${e.message}`);
+      }
+
     }
