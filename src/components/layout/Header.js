@@ -1,12 +1,12 @@
 import React from "react";
 import { Container, Nav, NavDropdown, Navbar, Row } from "react-bootstrap";
-import logo from "../assests/logo/logo.png";
+import logo from "../../assests/logo/logo.png";
 import { Link } from "react-router-dom";
 
 function Header() {
   return (
     <div>
-      <Navbar expand="lg" className="nav-bar">
+      <Navbar expand="lg" className="nav-bar1">
         <Container>
           <Navbar.Brand>
             <Link to="/" className="nav-link">
@@ -31,8 +31,8 @@ function Header() {
               <Link to="/login" className="nav-link">
                 Login
               </Link>
-              <Link to="/register" className="nav-link">
-                Signup
+              <Link to="/about" className="nav-link">
+                About
               </Link>
             </Nav>
           </Navbar.Collapse>

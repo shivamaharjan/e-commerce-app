@@ -3,6 +3,11 @@
 .nav-bar{
     background: linear-gradient( #c7dca7, #89b9ad);
 }
+.nav-bar1{
+    background:#c7dca7;
+}.nav-bar2{
+    background:#89b9ad;
+}
 .main{
     min-height: 80vh;
 }
@@ -21,5 +26,21 @@
   
 }
 .form-color{
-    background: linear-gradient( #ffebd831, #ffc5c50d);
+    background: linear-gradient( #ffebd878, #ffc5c54b);
+    margin-left: 50px;
+    margin-right: 50px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+
+}
+.side-links li:hover,
+.active {
+    background-color: #ffebd89b;
+    color: rgb(33, 37, 41);
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+}
+.admin-color {
+    background: #e7ffc596;
 }

@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import CustomInput from "../../components/customInput/CustomInput";
+import Footer from "../../components/layout/Footer";
+import Header from "../../components/layout/Header";
 import { loginAdminUser } from "../../redux/auth/userAction";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 
 const inputs = [
   {
@@ -27,6 +27,15 @@ const inputs = [
 function Login() {
   const [formData, setFormData] = useState({});
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userInfo = useSelector((state) => state.userInfo.user);
+
+   useEffect(() => {
+     // If user is logged in, then navigate them to dashboard
+     if (userInfo.uid) {
+       navigate("/dashboard");
+     }
+   }, [userInfo]);
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -40,7 +49,7 @@ function Login() {
   return (
     <div>
       <Header />
-      <div className="main">
+      <div className="main admin-color">
         <Form
           onSubmit={handleOnSubmit}
           className=" form-color login-form mt-3 mb-3 border p-5 shadow-lg "

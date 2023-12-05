@@ -1,4 +1,4 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth"
 import { toast } from "react-toastify"
 import { auth, db } from "../../config/firbase-config";
 import { doc, getDoc, setDoc } from "firebase/firestore";
@@ -39,6 +39,8 @@ export const loginAdminUser = (userInfo) => async(dispatch) => {
         })
         const {user} = await authSnap;
         toast.success("User Signed in!")
+        
+        dispatch(getUserInfo(user.uid))
 
 
 
@@ -47,9 +49,25 @@ export const loginAdminUser = (userInfo) => async(dispatch) => {
       }
     }
 
-    export const getUserInfo = (uid) => dispatch => {
+    export const resetPasswordAction = (email) => async(dispatch) => {
+     try {
+      const resPromise = sendPasswordResetEmail(auth, email);
+      toast.promise(resPromise, {
+        pending: "In Progress.."
+      })
+      await resPromise;
+      toast.success("Reset Email Send!")
+
+
+     } catch (e) {
+       toast.error(`Something went wrong. ${e.message}`);
+     }
+
+    }
+
+    export const getUserInfo = (uid) =>async(dispatch)  => {
       try {
-        const userSnap = getDoc(doc(db, "users", uid))
+        const userSnap = await getDoc(doc(db, "users", uid))
         if (userSnap.exists()){
           const userData = userSnap.data();
           const userInfo = {...userData, uid}

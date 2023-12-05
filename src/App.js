@@ -14,6 +14,8 @@ import Product from "./pages/product/Product";
 import Profile from "./pages/profile/Profile";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AdminLayout from "./components/layout/AdminLayout";
+import PrivateRoute from "./components/privateRoute/PrivateRoute";
 
 function App() {
   return (
@@ -23,18 +25,81 @@ function App() {
         {/* Public */}
         <Route path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
-        <Route path="/forget-password" element={<ForgetPassword />}></Route>
-        <Route path="/register" element={<Register />}></Route>
+        <Route
+          path="/forget-password"
+          element={
+            <PrivateRoute>
+              <ForgetPassword />
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path="/register"
+          element={
+            <PrivateRoute>
+              <Register />
+            </PrivateRoute>
+          }
+        ></Route>
         {/* Private */}
-        <Route path="/dashboard" element={<Dashboard />}></Route>
-        <Route path="/category" element={<Category />}></Route>
-        <Route path="/product" element={<Product />}></Route>
-        <Route path="/payment-options" element={<PaymentOptions />}></Route>
-        <Route path="/orders" element={<Orders />}></Route>
-        <Route path="/customers" element={<Customers />}></Route>
-        <Route path="/profile" element={<Profile />}></Route>
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path="/category"
+          element={
+            <PrivateRoute>
+              <Category />
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path="/product"
+          element={
+            <PrivateRoute>
+              <Product />
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path="/payment-options"
+          element={
+            <PrivateRoute>
+              <PaymentOptions />
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path="/orders"
+          element={
+            <PrivateRoute>
+              <Orders />
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path="/customers"
+          element={
+            <PrivateRoute>
+              <Customers />
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        ></Route>
       </Routes>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 }

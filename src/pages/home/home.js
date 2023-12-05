@@ -5,8 +5,8 @@ import image2 from "../../assests/featuredItems/image4.jpg";
 import img from "../../assests/home/img-5.jpg";
 import img1 from "../../assests/home/img-8.jpg";
 import image3 from "../../assests/toothbrush.webp";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
+import Footer from "../../components/layout/Footer";
+import Header from "../../components/layout/Header";
 
 function Home() {
   return (

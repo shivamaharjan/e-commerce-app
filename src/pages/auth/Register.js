@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
+import Footer from "../../components/layout/Footer";
+import Header from "../../components/layout/Header";
 import CustomInput from "../../components/customInput/CustomInput";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { createAdminUser } from "../../redux/auth/userAction";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import AdminLayout from "../../components/layout/AdminLayout";
 
 const inputs = [
   {
@@ -76,17 +77,27 @@ function Register() {
 
   return (
     <div>
-      <Header />
-      <div className="main">
-        <Form onSubmit={handleOnSubmit}className="form-color login-form mt-3 mb-3 border p-5 shadow-lg" >
-          {inputs.map((input) => {
-            return <CustomInput {...input} key={input.label}  onChange={handleOnChange}
-            />;
-          })}
-          <Button variant="outline-success" type="submit" >Register</Button>
-        </Form>
-      </div>
-      <Footer />
+      <AdminLayout title={"Register Admin"}>
+        <div className="main">
+          <Form
+            onSubmit={handleOnSubmit}
+            className="form-color login-form mt-3 mb-3 border p-5 shadow-lg"
+          >
+            {inputs.map((input) => {
+              return (
+                <CustomInput
+                  {...input}
+                  key={input.label}
+                  onChange={handleOnChange}
+                />
+              );
+            })}
+            <Button variant="outline-success" type="submit">
+              Register
+            </Button>
+          </Form>
+        </div>
+      </AdminLayout>
     </div>
   );
 }

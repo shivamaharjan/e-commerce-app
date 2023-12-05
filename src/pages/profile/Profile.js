@@ -1,9 +1,12 @@
 import React from 'react'
+import AdminLayout from '../../components/layout/AdminLayout';
 
 function Profile() {
   return (
-    <div>Profile</div>
-  )
+    <AdminLayout title={"Profile"}>
+      <div></div>
+    </AdminLayout>
+  );
 }
 
 export default Profile
