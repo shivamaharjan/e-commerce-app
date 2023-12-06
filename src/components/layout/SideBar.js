@@ -12,7 +12,7 @@ const sideLinks = [
     path: "/category",
   },
   {
-    label: "Product",
+    label: "Products",
     path: "/product",
   },
   {

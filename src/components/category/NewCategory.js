@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
+import { useDispatch } from 'react-redux';
+import { addOrUpdateCategoryList } from '../../redux/category/categoryAction';
+import slugify from 'slugify';
 
 function NewCategory() {
 
     const [categoryData, setCategoryData] = useState({
         status: "inactive"
     });
+    const dispatch = useDispatch();
 
     const handleOnChange = (e) => {
        let {name,value, checked} = e.target;
@@ -18,7 +22,18 @@ function NewCategory() {
     };
     const handleOnSubmit = (e) => {
         e.preventDefault();
+        const slug = slugify(categoryData.name, {
+            lower: true,
+            trim: true
+        })
+        const categoryObj = {...categoryData, slug}
+        // add categoryData in data base and put it in table
+        dispatch(addOrUpdateCategoryList(categoryObj));
         
+
+
+
+
 
 
     };
