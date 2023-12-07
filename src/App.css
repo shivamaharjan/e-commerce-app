@@ -34,6 +34,9 @@
     padding: 10px;
 
 }
+.form-colour{
+    background: linear-gradient( #ffebd878, #ffc5c54b)
+}
 .side-links li:hover,
 .active {
     background-color: #ffebd89b;
@@ -43,5 +46,20 @@
 }
 .admin-color {
     background: #e7ffc596;
+}
+.active-status {
+    background-color: green;
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 5px;
+    text-transform: capitalize;
+}
+
+.inactive-status {
+    background-color: red;
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 5px;
+    text-transform: capitalize;
 }
 

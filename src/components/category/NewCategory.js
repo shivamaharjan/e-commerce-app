@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
 import { useDispatch } from 'react-redux';
-import { addOrUpdateCategoryList } from '../../redux/category/categoryAction';
+import { addOrUpdateCategoryAction } from "../../redux/category/categoryAction";
 import slugify from 'slugify';
 
 function NewCategory() {
@@ -28,14 +28,10 @@ function NewCategory() {
         })
         const categoryObj = {...categoryData, slug}
         // add categoryData in data base and put it in table
-        dispatch(addOrUpdateCategoryList(categoryObj));
-        
-
-
-
-
-
-
+        dispatch(addOrUpdateCategoryAction(categoryObj));
+        setCategoryData({
+         status: "inactive",
+       });
     };
   return (
     <div>
@@ -63,6 +59,7 @@ function NewCategory() {
                 name="name"
                 type="text"
                 onChange={handleOnChange}
+                value={categoryData?.name || ""}
               />
             </Form.Group>
           </Col>

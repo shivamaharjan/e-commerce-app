@@ -7,11 +7,14 @@ import img1 from "../../assests/home/img-8.jpg";
 import image3 from "../../assests/toothbrush.webp";
 import Footer from "../../components/layout/Footer";
 import Header from "../../components/layout/Header";
+import AdminLayout from "../../components/layout/AdminLayout";
+import { useSelector } from "react-redux";
 
 function Home() {
+  const {user} = useSelector(state => state.userInfo)
   return (
     <div>
-      <Header />
+      {user?.uid ?  <AdminLayout title={"Home"}/> :<Header />}
       <div className="main">
         <Container>
           <div className="d-none d-sm-inline">
@@ -177,7 +180,7 @@ function Home() {
           </div>
         </Container>
       </div>
-      <Footer />
+      {user?.uid ? (<AdminLayout />) : (<Footer />)}
     </div>
   );
 }

@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import ForgetPassword from "./pages/auth/ForgetPassword";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
@@ -10,14 +14,17 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import Home from "./pages/home/Home";
 import Orders from "./pages/orders/Orders";
 import PaymentOptions from "./pages/payment-options/PaymentOptions";
+import AddNewProduct from "./pages/product/AddNewProduct";
 import Product from "./pages/product/Product";
 import Profile from "./pages/profile/Profile";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import AdminLayout from "./components/layout/AdminLayout";
-import PrivateRoute from "./components/privateRoute/PrivateRoute";
+import { getAllCategoriesAction } from "./redux/category/categoryAction";
 
 function App() {
+  const disptach = useDispatch();
+
+  useEffect(() => {
+    disptach(getAllCategoriesAction());
+  });
   return (
     <div>
       {/* Public Routes */}
@@ -63,6 +70,14 @@ function App() {
           element={
             <PrivateRoute>
               <Product />
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path="product/new"
+          element={
+            <PrivateRoute>
+              <AddNewProduct />
             </PrivateRoute>
           }
         ></Route>

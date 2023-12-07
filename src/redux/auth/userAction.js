@@ -1,8 +1,8 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth"
 import { toast } from "react-toastify"
-import { auth, db } from "../../config/firbase-config";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { setUser } from "./userSlice";
+import { auth, db } from "../../config/firbase-config";
 
 export const createAdminUser = (userInfo, navigate) => async (dispatch) => {
   try {

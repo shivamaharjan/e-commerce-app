@@ -1,21 +1,26 @@
-import { collection, doc, getDocs, setDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { db } from "../../config/firbase-config";
-import { setCategory } from "./categorySlice";
+import { setCategoryList } from "./categorySlice";
 
-export const addOrUpdateCategoryList =
+export const addOrUpdateCategoryAction =
   ({ slug, ...rest }) =>
-  async (disptach) => {
+  async (dispatch) => {
     try {
+      // If I have merge: true, this will update if slug exists
       const catPromise = setDoc(doc(db, "category", slug), rest, {
         merge: true,
       });
       toast.promise(catPromise, {
-        pending: "In progress",
+        pending: "In Progress...",
       });
       await catPromise;
-      toast.success("Category added");
+      console.log(catPromise)
+      toast.success("Successfully Created");
+      // Once DB is updated, fetch the latest from DB and set it on our redux store
+      dispatch(getAllCategoriesAction());
     } catch (e) {
+      console.log(e);
       toast.error(`Something went wrong ${e.message}`);
     }
   };
@@ -32,8 +37,24 @@ export const getAllCategoriesAction = () => async (dispatch) => {
         slug,
       });
     });
-    dispatch(setCategory(catList));
+    console.log(catList)
+    dispatch(setCategoryList(catList));
+    console.log(setCategoryList)
   } catch (e) {
+    console.log(e);
     toast.error(`Something went wrong ${e.message}`);
   }
 };
+export const deleteCategoryAction = (slug) => async(dispatch) => {
+    try {
+    const deletePromise = deleteDoc(doc(db, "category", slug));
+    toast.promise(deletePromise, {
+      pending: "In Progress",
+    });
+    await deletePromise;
+    dispatch(getAllCategoriesAction());
+  } catch (e) {
+    console.log(e);
+    toast.error(`Something went wrong ${e.message}`);
+  }
+}
