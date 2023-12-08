@@ -74,15 +74,22 @@ function AddNewProduct() {
      ...formData,
      [name]: value,
    });
-   console.log(formData)
  };
+
+ const handleOnImageAttached = () => {}
+
+ const handleOnSubmit = () => {};
+
   return (
     <div>
       <AdminLayout title="Add New Products">
         <Link to="/product">
           <Button variant="outline-success"> &lt; Go Back</Button>
         </Link>
-        <Form className="border p-3 mt-3 shadow rounded form-color">
+        <Form
+          onSubmit={handleOnSubmit}
+          className="border p-3 mt-3 shadow rounded form-color"
+        >
           <Form.Group className="mb-2 mt-1">
             <Form.Label>Select Category *</Form.Label>
             <Form.Select
@@ -90,7 +97,7 @@ function AddNewProduct() {
               required
               onChange={handleOnChange}
             >
-              <option>Open this select menu</option>
+              <option>Select the category for the product</option>
               {categoryList.map((cat) => {
                 return (
                   <option key={cat.slug} value={cat.slug}>
@@ -119,6 +126,14 @@ function AddNewProduct() {
                 />
               );
             })}
+          </Form.Group>
+          <Form.Group>
+            <Form.Control
+              required
+              onChange={handleOnImageAttached}
+              accept="image/png, image/jpeg"
+              type="file"
+            />
           </Form.Group>
         </Form>
       </AdminLayout>
