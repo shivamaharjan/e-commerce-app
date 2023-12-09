@@ -42,7 +42,7 @@ function ProductTable() {
                 <td>$ {product.price}</td>
                 <td>{product.quantity}</td>
                 <td>
-                  <Link to="/product/edit">
+                  <Link to={`/product/edit/${product.slug}`}>
                     <Button variant="outline-warning">Edit</Button>
                   </Link>
                 </td>
