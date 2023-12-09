@@ -3,23 +3,26 @@ import { toast } from "react-toastify";
 import { db } from "../../config/firbase-config";
 import { setProductList } from "./ProductSlice";
 
-export const addOrUpdateProductAction = ({slug, ...rest}) =>async(dispatch)  => {
+export const addOrUpdateProductAction =
+  ({ slug, ...rest }) =>
+  async (dispatch) => {
     try {
-        const productPromise = setDoc(doc(db, "product", slug), rest , {
-            merge:true
-        });
-        toast.promise(productPromise, {
-            pending: "In progress"
-        });
-        await productPromise;
-        toast.success("Products added!!")
-        dispatch(getAllProductAction())
-
+      // If I have merge: true, this will update if slug exists
+      const productPromise = setDoc(doc(db, "product", slug), rest, {
+        merge: true,
+      });
+      toast.promise(productPromise, {
+        pending: "In Progress...",
+      });
+      await productPromise;
+      toast.success("Successfully Created");
+      // Once DB is updated, fetch the latest from DB and set it on our redux store
+      dispatch(getAllProductAction());
     } catch (e) {
       console.log(e);
       toast.error(`Something went wrong ${e.message}`);
     }
-};
+  };
 
 export const getAllProductAction = () => async(dispatch) => {
     try{

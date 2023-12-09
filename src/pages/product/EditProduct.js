@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, ProgressBar } from "react-bootstrap";
+import { MdDelete } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import CustomInput from "../../components/customInput/CustomInput";
 import AdminLayout from "../../components/layout/AdminLayout";
-import { handleFileUpload } from "../../utils";
-import slugify from "slugify";
 import { addOrUpdateProductAction } from "../../redux/product/ProductAction";
-import { ProgressBar } from "react-bootstrap";
-
-
+import { handleFileUpload } from "../../utils";
 
 function EditProduct() {
-    const { slug } = useParams();
+  const { slug } = useParams();
 
   const { categoryList } = useSelector((state) => state.category);
-  const {productList} = useSelector(state => state.product)
+  const { productList } = useSelector((state) => state.product);
   const [formData, setFormData] = useState({ status: "inactive" });
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [progress, setProgress] = useState(0);
@@ -50,29 +47,30 @@ function EditProduct() {
     setUploadedFiles(fileArr);
   };
 
+  const setThumbnail = (image) => {
+    setFormData({ ...formData, thumbnail: image });
+  };
+  const removeImage = (image) => {
+    const images = formData?.images.filter((img) => img !== image);
+    setFormData({ ...formData, images });
+  };
+
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-
     const promises = uploadedFiles.map((file) =>
       handleFileUpload(file, setProgress)
     );
-
     const urls = await Promise.all(promises);
-
-    const slug = slugify(formData.title, {
-      lower: true,
-      trim: true,
-    });
 
     const productObj = {
       ...formData,
-      slug,
-      images: urls,
-      thumbnail: urls[0],
+      images: [...formData?.images, ...urls],
     };
     await dispatch(addOrUpdateProductAction(productObj));
-    navigate("/product");
+    navigate("/product")
+
   };
+
 
   const productInputFields = [
     {
@@ -167,7 +165,11 @@ function EditProduct() {
               <option>Select the category for the product</option>
               {categoryList.map((cat) => {
                 return (
-                  <option key={cat.slug} value={cat.slug}>
+                  <option
+                    key={cat.slug}
+                    value={cat.slug}
+                    selected={cat.slug === formData?.parentCategory}
+                  >
                     {cat.name}
                   </option>
                 );
@@ -180,6 +182,7 @@ function EditProduct() {
               label="Status"
               name="status"
               onChange={handleOnChange}
+              checked={formData?.status === "active"}
             />
           </Form.Group>
 
@@ -194,9 +197,30 @@ function EditProduct() {
               );
             })}
           </Form.Group>
+          <div className="d-flex gap-2 p-1 border rounded">
+            {formData?.images?.map((image, index) => {
+              return (
+                <div className="d-flex flex-column justify-content-end">
+                  <div
+                    onClick={() => setThumbnail(image)}
+                    className={image === formData?.thumbnail ? "bg-info" : ""}
+                  >
+                    <div className="pb-2">
+                      <img src={image} alt="" width={"100px"} />
+                    </div>
+                  </div>
+                  <MdDelete
+                    style={{
+                      color: "red",
+                    }}
+                    onClick={() => removeImage(image)}
+                  />
+                </div>
+              );
+            })}
+          </div>
           <Form.Group>
             <Form.Control
-              required
               onChange={handleOnImageAttached}
               accept="image/png, image/jpeg, image/webp, image/avif"
               type="file"
@@ -207,7 +231,7 @@ function EditProduct() {
           </Form.Group>
           <div className="d-flex justify-content-center">
             <Button className="m-4" variant="outline-success" type="submit">
-              Add Product
+              Edit Product
             </Button>
           </div>
         </Form>

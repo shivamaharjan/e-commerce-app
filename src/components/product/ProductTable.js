@@ -36,7 +36,7 @@ function ProductTable() {
                 <td>
                   <img src={product.thumbnail} alt="img" width={"80px"}></img>
                 </td>
-                <td>{product.status}</td>
+                <td > <span className={`${product.status}-status`}>{product.status}</span></td>
                 <td>{product.title}</td>
                 <td>{product.slug}</td>
                 <td>$ {product.price}</td>
