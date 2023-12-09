@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CustomInput from "../../components/customInput/CustomInput";
 import AdminLayout from "../../components/layout/AdminLayout";
 import { handleFileUpload } from "../../utils";
@@ -71,6 +71,7 @@ function AddNewProduct() {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [progress, setProgress] = useState(0);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleOnChange = (e) => {
     let { name, value, checked } = e.target;
@@ -109,6 +110,7 @@ function AddNewProduct() {
         thumbnail: urls[0]
     }
     await dispatch(addOrUpdateProductAction(productObj));
+    navigate("/product")
 
   };
 
@@ -163,7 +165,7 @@ function AddNewProduct() {
             <Form.Control
               required
               onChange={handleOnImageAttached}
-              accept="image/png, image/jpeg, image/webp"
+              accept="image/png, image/jpeg, image/webp, image/avif"
               type="file"
               name="images"
               multiple
