@@ -18,12 +18,15 @@ import AddNewProduct from "./pages/product/AddNewProduct";
 import Product from "./pages/product/Product";
 import Profile from "./pages/profile/Profile";
 import { getAllCategoriesAction } from "./redux/category/categoryAction";
+import { getAllProductAction } from "./redux/product/ProductAction";
+import EditProduct from "./pages/product/EditProduct";
 
 function App() {
-  const disptach = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    disptach(getAllCategoriesAction());
+    dispatch(getAllCategoriesAction());
+    dispatch(getAllProductAction());
   });
   return (
     <div>
@@ -78,6 +81,14 @@ function App() {
           element={
             <PrivateRoute>
               <AddNewProduct />
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path="product/edit"
+          element={
+            <PrivateRoute>
+              <EditProduct />
             </PrivateRoute>
           }
         ></Route>

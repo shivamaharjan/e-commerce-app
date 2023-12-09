@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CustomInput from "../../components/customInput/CustomInput";
 import AdminLayout from "../../components/layout/AdminLayout";
+import { handleFileUpload } from "../../utils";
+import slugify from "slugify";
+import { addOrUpdateProductAction } from "../../redux/product/ProductAction";
+import { ProgressBar } from "react-bootstrap";
 
 const productInputFields = [
   {
@@ -64,21 +68,49 @@ const productInputFields = [
 function AddNewProduct() {
   const { categoryList } = useSelector((state) => state.category);
   const [formData, setFormData] = useState({ status: "inactive" });
+  const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [progress, setProgress] = useState(0);
+  const dispatch = useDispatch();
 
- const handleOnChange = (e) => {
-   let { name, value, checked } = e.target;
-   if (name === "status") {
-     value = checked ? "active" : "inactive";
-   }
-   setFormData({
-     ...formData,
-     [name]: value,
-   });
- };
+  const handleOnChange = (e) => {
+    let { name, value, checked } = e.target;
+    if (name === "status") {
+      value = checked ? "active" : "inactive";
+    }
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
- const handleOnImageAttached = () => {}
+  const handleOnImageAttached = (e) => {
+    const { files } = e.target;
+    const fileArr = [...files];
+    setUploadedFiles(fileArr)
+    console.log(uploadedFiles)
+  };
 
- const handleOnSubmit = () => {};
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+
+    const promises = uploadedFiles.map(file => handleFileUpload(file, setProgress))
+
+    const urls = await Promise.all(promises)
+
+    const slug = slugify(formData.title, {
+        lower: true,
+        trim: true
+    })
+
+    const productObj = {
+        ...formData,
+        slug,
+        images: urls,
+        thumbnail: urls[0]
+    }
+    await dispatch(addOrUpdateProductAction(productObj));
+
+  };
 
   return (
     <div>
@@ -131,10 +163,18 @@ function AddNewProduct() {
             <Form.Control
               required
               onChange={handleOnImageAttached}
-              accept="image/png, image/jpeg"
+              accept="image/png, image/jpeg, image/webp"
               type="file"
+              name="images"
+              multiple
             />
+            <ProgressBar animated now={progress} label={`${progress}%`} />
           </Form.Group>
+          <div className="d-flex justify-content-center">
+            <Button className="m-4" variant="outline-success" type="submit">
+              Add Product
+            </Button>
+          </div>
         </Form>
       </AdminLayout>
     </div>
